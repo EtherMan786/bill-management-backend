@@ -1,0 +1,14 @@
+const express = require('express');
+const multer = require('multer');
+const upload = multer();
+const auth = require('../middleware/auth');
+const controller = require('../controllers/billController');
+const router = express.Router();
+router.post('/upload', auth, upload.single('bill'), controller.upload);
+router.get('/', auth, controller.list);
+router.get('/:id', auth, controller.getOne);
+router.delete('/bulk-delete', auth, controller.bulkDelete);
+router.get('/trash/list', auth, controller.trashList);
+router.put('/restore', auth, controller.restore);
+router.delete('/permanent-delete', auth, controller.permanentDelete);
+module.exports = router;
